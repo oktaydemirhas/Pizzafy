@@ -21,10 +21,21 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+#root {
+  /*background-color: #CE2829;
+  background-image: url("../images/iteration-1-images/home-banner.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  height: 100vh;
+  padding-top: 80px;
+  margin-left: 0;*/
 }
 
 h1 {
@@ -35,13 +46,15 @@ h1 {
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  padding: 0.85em 2.95em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #f9f9f9;
+  background-color: #FDC913;
   cursor: pointer;
   transition: border-color 0.25s;
+  border-radius: 30px;
+  margin-top: 30px;
 }
 button:hover {
   border-color: #646cff;
@@ -49,4 +62,52 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.home-h2 {
+  font-family: "Barlow", sans-serif;
+  font-weight: 300;
+  font-size: 4.5rem;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 0.03em;
+}
+
+main {
+  padding-top: 10px;
+}
+
+.home-h2 + .home-h2 {
+  margin-top: -20px;
+}
+
+header {
+  background-color: #CE2829;
+}
+
+.order-page-container {
+  /*display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: white;
+  margin-top: 30px;
+  width: 100%;*/
+  
+}
+
+.order-page-content {
+  /*width: 30%;
+  background-color: rgb(110, 45, 45);*/
+}
+
+main {
+  background-color: #CE2829;
+  background-image: url("../images/iteration-1-images/home-banner.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  height: 100vh;
+  padding-top: 80px;
+  margin-left: 0;
 }
