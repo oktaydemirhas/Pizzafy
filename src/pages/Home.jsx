@@ -1,9 +1,19 @@
 import React from 'react';
 import Header from '../Header';
 import { Link } from "react-router-dom";
-
+import { useEffect } from 'react';
 
 const Home = () => {
+  useEffect(() => {
+    // Y ekseninde kaydırmayı devre dışı bırak
+    document.body.style.overflowY = 'hidden';
+
+    // Component kaldırıldığında eski haline döndür
+    return () => {
+      document.body.style.overflowY = 'auto';
+    };
+  }, []);
+
   return (
     <main>
       <section>
