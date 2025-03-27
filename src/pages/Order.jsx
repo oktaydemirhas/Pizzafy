@@ -4,34 +4,59 @@ import { pizzaVerileri } from "../data";
 import { useHistory } from "react-router-dom";
 
 const Order = () => {
-  // Sayfada gösterilecek pizzayı seçiyoruz (ilk pizza)
+  // Sayfada gösterilecek pizzayı seçiyoruz, ilk pizza
   const history = useHistory();
   const pizza = pizzaVerileri[0];
 
   // State tanımlamaları
   const [boyutSec, setBoyutSec] = useState("");
   const [hamurSec, setHamurSec] = useState("");
-  const [secilenMalzemeler, setSecilenMalzemeler] = useState([]);
-  const [toplamSecimFiyati, setToplamSecimFiyati] = useState(0);
+  const [secilenMalzemeler, setSecilenMalzemeler] = useState([]); // Seçilen ek malzemeler
+  const [toplamSecimFiyati, setToplamSecimFiyati] = useState(0); // Her biri 5tl ek malzeme hesabı
   const [siparisAdeti, setSiparisAdeti] = useState(1);
   const [siparisNotu, setSiparisNotu] = useState("");
   const [formHatasi, setFormHatasi] = useState(true);
-  const [isimHatasi, setIsimHatasi] = useState(true); // İsim hatası kontrolü
+  const [isimHatasi, setIsimHatasi] = useState(true);
   const [gonderiliyor, setGonderiliyor] = useState(false);
   const [isim, setIsim] = useState(""); // İsim inputu için state
-  const [minHatasi, setMinHatasi] = useState(true); // Minimum seçimi kontrol eder
-  const [maxHatasi, setMaxHatasi] = useState(false); // Maksimum seçimi kontrol eder
+  const [minHatasi, setMinHatasi] = useState(true);
+  const [maxHatasi, setMaxHatasi] = useState(false);
 
-  // Malzeme seçimi değiştiğinde çağrılacak fonksiyon
+  // İsim inputu değiştiğinde çağrılan fonksiyon
+  const handleIsimChange = (e) => {
+    const girilenIsim = e.target.value; // Her karakterde değişkene ata
+    setIsim(girilenIsim); // State'e at girilen ismi
+
+    if (girilenIsim.length >= 3) {
+      // Yazılan isim 3 harften büyükse
+      setIsimHatasi(false); // İsim geçerli, hata mesajı gösterme
+    } else {
+      setIsimHatasi(true); // İsim geçersiz, hata mesajı göster
+    }
+  };
+
+  // Pizza adet arttır-azalt
+  const adetArtir = () => {
+    setSiparisAdeti((prevAdet) => prevAdet + 1); // Başlangıç sipariş adeti 1 idi state tanımında, + tıklanırsa 1 ekliyor
+  };
+
+  const adetAzalt = () => {
+    setSiparisAdeti((prevAdet) => (prevAdet > 1 ? prevAdet - 1 : 1)); // 1'in üstündeyse 1 eksilt, aksi durumda 1
+  };
+
+  // Malzeme seçimi değişikliğinde çağrılacak fonksiyon
   const handleMalzemeChange = (malzemeId) => {
+    // Buradaki id parametresi checkboxların onChange özelliğinden geliyo, tıklanan malzemenin id'si buraya atanıyor
     let yeniSecimler;
 
     if (secilenMalzemeler.includes(malzemeId)) {
-      yeniSecimler = secilenMalzemeler.filter((id) => id !== malzemeId);
-      setSecilenMalzemeler(yeniSecimler);
+      // İlgili malzemeiId state içinde var mı
+      yeniSecimler = secilenMalzemeler.filter((id) => id !== malzemeId); // Id'leri kontrol et, dizideki malzemenin id'ye eşit değilse
+      setSecilenMalzemeler(yeniSecimler); // Demek ki dizide yok, ekle state güncelleyip
       setMaxHatasi(false); // Malzeme silindiğinde maksimum hata sıfırlanır
 
       if (yeniSecimler.length < 4) {
+        // Seçilen malzemeler 4'ten küçükse
         setMinHatasi(true);
         setFormHatasi(true);
       } else {
@@ -40,24 +65,25 @@ const Order = () => {
       }
     } else {
       if (secilenMalzemeler.length < 10) {
-        yeniSecimler = [...secilenMalzemeler, malzemeId];
-        setSecilenMalzemeler(yeniSecimler);
+        // Seçilen malzemeler 10'dan küçükse
+        yeniSecimler = [...secilenMalzemeler, malzemeId]; // Eski diziye ilgili yeni malzemeyi ekle
+        setSecilenMalzemeler(yeniSecimler); // State güncelle
         setMaxHatasi(false);
 
         if (yeniSecimler.length >= 4) {
+          // Eğer 4 malzeme veya daha fazlası varsa ve 10'dan da küçükse
           setMinHatasi(false);
-          setFormHatasi(false); // Eğer 4 malzeme veya daha fazlası varsa form hatası yok
+          setFormHatasi(false);
         }
       } else {
-        setMaxHatasi(true); // Maksimum hata sadece uyarı olarak gösterilecek
+        setMaxHatasi(true); // Aksi durumda 10 aşılmaya çalışılıyordur
       }
     }
   };
 
-  // Form validation kontrolü
-
-  // Formdaki tüm koşulları dinamik olarak kontrol et
+  // Form doğrulama
   const formGecerliMi = () => {
+    // Koşullar sağlanıyorsa true, form geçerli
     return (
       isim.length >= 3 &&
       boyutSec !== "" &&
@@ -66,18 +92,10 @@ const Order = () => {
       secilenMalzemeler.length <= 10
     );
   };
+
   useEffect(() => {
-    setFormHatasi(!formGecerliMi()); // Sadece geçerliliği etkileyenler formHatasi’ni güncelliyor
-  }, [isim, boyutSec, hamurSec, secilenMalzemeler]); // Bu değerler değiştiğinde kontrolü yeniden yap
-
-  // Pizza adet arttır-azalt
-  const adetArtir = () => {
-    setSiparisAdeti((prevAdet) => prevAdet + 1);
-  };
-
-  const adetAzalt = () => {
-    setSiparisAdeti((prevAdet) => (prevAdet > 1 ? prevAdet - 1 : 1)); // 1'in altına düşmesini engeller
-  };
+    setFormHatasi(!formGecerliMi()); // formGecerliMi yeniden çağır, formda sorun yok yani true ise false ver setFormHatasi(false) olsun
+  }, [isim, boyutSec, hamurSec, secilenMalzemeler]); // Bu değerlerden biri değiştiğinde kontrolü yeniden yap, yukarı
 
   // Toplam fiyat hesaplama - sadece pizza fiyatı + malzeme fiyatları
   const hesaplaToplam = () => {
@@ -85,46 +103,36 @@ const Order = () => {
     const malzemeFiyati = secilenMalzemeler.length * 5; // Her malzeme 5₺
     const toplam = pizzaFiyati + malzemeFiyati;
 
-    setToplamSecimFiyati(malzemeFiyati);
+    setToplamSecimFiyati(malzemeFiyati); // Malzemelerin total fiyatını state'e at
     return toplam;
   };
 
-  // Her malzeme seçimi değiştiğinde toplam fiyatı hesapla
+  // Her malzeme seçimi değiştiğinde toplam fiyatı yeniden çağırıp hesapla
   useEffect(() => {
     hesaplaToplam();
   }, [secilenMalzemeler]);
 
-  // İsim inputu değiştiğinde çağrılan fonksiyon
-  const handleIsimChange = (e) => {
-    const girilenIsim = e.target.value;
-    setIsim(girilenIsim);
-
-    if (girilenIsim.length >= 3) {
-      setIsimHatasi(false); // İsim geçerli
-    } else {
-      setIsimHatasi(true); // İsim geçersiz
-    }
-  };
-
-  // Form gönderme işlemi
+  // Form gönderme işlemi, sipariş ver butonu ile tetikleniyor
   const handleSubmit = async (e) => {
-    e.preventDefault(); // HTML tarafından gönderimi engelle
+    // Asenkron çünkü api isteğiyle siparişi yollayacağız
+    e.preventDefault(); // Her yenilemeden form göndermeyi durdur
 
     if (!formGecerliMi()) {
-      // Form geçerliliği kontrolü
+      // Form'a burada bakıyoruz. formGecerliMi false ise yani form sıkıntılıysa true dönüyor ve aşağısı çalışıyor
       setFormHatasi(true);
       return; // Hatalıysa gönderimi durdur
     }
 
-    setFormHatasi(false);
-    setGonderiliyor(true);
+    setFormHatasi(false); // Hata mesajı yok
+    setGonderiliyor(true); // Gönderim işlemi başladı, bu sayede state ile sipariş veriliyor mesajı butona gidecek
 
     // Seçilen malzeme isimlerini al
     const secilenMalzemeIsimleri = secilenMalzemeler.map(
-      (id) => pizza.malzemeler.find((m) => m.id === id).isim
+      // secilenMalzemeler'de malzeme id'leri var
+      (id) => pizza.malzemeler.find((m) => m.id === id).isim // Bunları alıp data'daki id ile eşleşiyorsa isimlerini alıyoruz
     );
 
-    // Form verilerini hazırla
+    // Form verilerini obje olarak hazırla
     const siparisVerileri = {
       isim,
       boyut: boyutSec,
@@ -139,12 +147,12 @@ const Order = () => {
       // API isteği gönder
       const response = await axios.post(
         "https://reqres.in/api/pizza",
-        siparisVerileri
+        siparisVerileri // JSON formatıyla iletiyoruz
       );
-      console.log("Sipariş Özeti:", response.data); // Başarılı sipariş yanıtı
-      setGonderiliyor(false);
+      console.log("Sipariş Özeti:", response.data); // Başarılıyla gönderme
+      setGonderiliyor(false); // Gönderiliyor mesajını false'a çekiyor
 
-      history.push("/order-completed");
+      history.push("/order-completed"); // Sipariş alında sayfasına yolluyor
     } catch (error) {
       console.error("Sipariş hatası:", error);
       setGonderiliyor(false);
@@ -197,13 +205,14 @@ const Order = () => {
               </div>
               <div className="boyut-radio">
                 {pizza.boyutSecenekleri.map((boyut, index) => (
+                  // Her boyut için indexi ata
                   <label key={index}>
                     <input
                       type="radio"
                       name="boyut"
-                      value={boyut}
-                      checked={boyutSec === boyut}
-                      onChange={(e) => setBoyutSec(e.target.value)}
+                      value={boyut} // Radio butonun değerine boyutu atadık
+                      checked={boyutSec === boyut} // State'deki boyut değeri radio butonun değerine eşitle
+                      onChange={(e) => setBoyutSec(e.target.value)} // Her yeni seçimde tekrar state'e at
                     />
                     {boyut}
                   </label>
@@ -242,20 +251,24 @@ const Order = () => {
               <p>En fazla 10 malzeme seçebilirsiniz. (Her malzeme 5₺)</p>
             </div>
             <div className="ek-malzeme-checkbox">
-              {pizza.malzemeler.map((malzeme) => (
-                <div key={malzeme.id}>
-                  <input
-                    type="checkbox"
-                    id={`malzeme-${malzeme.id}`}
-                    value={malzeme.id}
-                    checked={secilenMalzemeler.includes(malzeme.id)}
-                    onChange={() => handleMalzemeChange(malzeme.id)}
-                  />
-                  <label htmlFor={`malzeme-${malzeme.id}`}>
-                    {malzeme.isim}
-                  </label>
-                </div>
-              ))}
+              {pizza.malzemeler.map(
+                (
+                  malzeme // Her malzemeyi dolaş
+                ) => (
+                  <div key={malzeme.id}>
+                    <input
+                      type="checkbox"
+                      id={`malzeme-${malzeme.id}`} // Her checkbox'un idsi farklı "malzeme-1" örneğin
+                      value={malzeme.id} // 1 ya da 2 gibi değeri checkbox'a value olarak veriyoruz
+                      checked={secilenMalzemeler.includes(malzeme.id)} // secilenMalzemeler'de malzeme id'leri var sadece, includes ile içine bakıyoruz malzeme id var mı diye, true ise işaretle
+                      onChange={() => handleMalzemeChange(malzeme.id)} // Her tıklamada fonksiyonu çağır, malzeme.id'yi parametre olarak yolla. Seçildiyse secilenMalzemeler ekle kaldırıldıysa secilenMalzemeler'den sil
+                    />
+                    <label htmlFor={`malzeme-${malzeme.id}`}>
+                      {malzeme.isim}
+                    </label>
+                  </div>
+                )
+              )}
             </div>
             {minHatasi && (
               <div className="error">Minimum 4 malzeme seçmelisiniz</div>
@@ -273,7 +286,7 @@ const Order = () => {
               type="text"
               placeholder="İsminizi giriniz (En az 3 karakter)"
               value={isim}
-              onChange={handleIsimChange} // 📌 handleIsimChange fonksiyonunu buraya bağladık.
+              onChange={handleIsimChange}
             />
             {isimHatasi && (
               <div className="error">İsim en az 3 karakter olmalıdır.</div>
@@ -330,8 +343,8 @@ const Order = () => {
             </div>
             <div className="siparis-button">
               <button
-                onClick={handleSubmit}
-                disabled={formHatasi || isimHatasi || gonderiliyor} // Maksimum hatası bu durumu etkilemiyor
+                onClick={handleSubmit} // Fonksiyonu çağır, orda form geçerli mi bak duruma göre api'ye post et. Aksi durumda hata mesajı ver
+                disabled={formHatasi || isimHatasi || gonderiliyor} // 3 veya koşulu var burada. Hatalardan biri true ise yani sıkıntılıysa butonu pasif yapıyor
               >
                 {gonderiliyor ? "Sipariş Veriliyor..." : "SİPARİŞ VER"}
               </button>

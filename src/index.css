@@ -58,6 +58,14 @@ button:focus-visible {
   color: #ffffff;
   margin: 0;
   letter-spacing: 0.03em;
+  text-align: center;
+}
+
+.start-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 main {
@@ -287,7 +295,7 @@ main {
 
 .miktar span {
   border: 1px solid #D9D9D9;
-  padding: 1rem 1.5rem;
+  padding: 1.1rem 1.5rem;
   padding-top: 1.5rem;
 }
 
@@ -347,6 +355,7 @@ main {
 }
 
 .completed-h2 {
+  text-align: center;
   margin-bottom: 12rem;
 }
 
