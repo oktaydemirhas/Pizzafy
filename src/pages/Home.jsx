@@ -19,6 +19,7 @@ const Home = () => {
       <section>
         <div className="start-container">
           <Header />
+          <span className="firsatSpan">fırsatı kaçırma</span>
           <h2 className="home-h2">KOD ACIKTIRIR</h2>
           <h2 className="home-h2">PİZZA, DOYURUR</h2>
           <Link to="/order">

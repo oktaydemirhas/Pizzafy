@@ -359,6 +359,13 @@ main {
   margin-bottom: 12rem;
 }
 
+.firsatSpan {
+  padding-top: 3rem;
+  font-family: Satisfy;
+  font-size: 32px;
+  line-height: 1rem;
+  color: #FDC913;
+}
 
 /* Mobil */
 @media (max-width: 600px) {
