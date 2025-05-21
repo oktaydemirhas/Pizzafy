@@ -1,4 +1,5 @@
 # Sprint Challenge: _Teknolojik Yemekler - SPA_
+https://pizzafy-fawn.vercel.app/
 
 ## Proje Açıklaması
 
