@@ -1,9 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const Header = () => {
   return (
     <header>
-      <div id="logo"><img src="../images/iteration-1-images/logo.svg"></img></div>
+      <div id="logo">
+        <img src="/logo.svg"></img>
+      </div>
     </header>
   );
 };

@@ -163,7 +163,7 @@ const Order = () => {
     <>
       <div className="header">
         <div className="logo">
-          <img src="../images/iteration-1-images/logo.svg"></img>
+          <img src="/logo.svg"></img>
         </div>
         <div className="nav-bar thin-text">
           <div className="navbardiv">

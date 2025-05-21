@@ -1,4 +1,4 @@
-# Sprint Challenge: _Teknolojik Yemekler - SPA_
+# Sprint Challenge: Teknolojik Yemekler
 
 ## Proje Açıklaması
 
@@ -10,6 +10,38 @@ S8 içinde de Workintech eğitmenlerine, adeta bir teknik mülakattaymış gibi,
 
 > Kısaca: 4 dk içinde, önce arayüzü anlatıp, sonra kodun nasıl
 > çalıştığını ifade edebilmelisin. Zaman kullanımı ve sunum tekniğin de değerlendirme kriterlerinde yer alıyor. Öncesinde, kendini videoya çekerek, sunum pratiği yapabilirsin.
+
+## Projede Kullanılan Teknolojiler ve Teknikler
+
+Bu proje, modern web geliştirme pratikleri kullanılarak oluşturulmuştur. Aşağıda projede yer alan temel teknolojiler ve teknikler listelenmiştir:
+
+- **React (v18.2.0):** Kullanıcı arayüzü geliştirmek için kullanılan popüler ve güçlü bir JavaScript kütüphanesidir. Bileşen tabanlı mimarisi sayesinde modüler ve tekrar kullanılabilir UI elemanları oluşturmayı kolaylaştırır.
+- **Vite (v5.0.8):** Yeni nesil bir geliştirme sunucusu ve JavaScript projeleri için derleme aracıdır. Geliştirme sırasında hızlı başlatma ve anında modül değişimi (HMR) gibi özellikleriyle geliştirici deneyimini iyileştirir. Üretim build'leri için optimize edilmiş çıktılar sunar.
+- **React Router DOM (v5.3.4):** Tek sayfa uygulamalarında (SPA) dinamik yönlendirme (routing) işlemlerini yönetmek için kullanılır. Kullanıcıların farklı sayfalara veya görünümlere geçiş yapmasını sağlar.
+- **Axios (v1.6.5):** Tarayıcı ve Node.js için Promise tabanlı bir HTTP istemcisidir. Harici API'lerle iletişim kurmak, veri almak (GET) ve veri göndermek (POST) gibi işlemler için kullanılır. Bu projede, sipariş verilerinin mock bir API'ye gönderilmesi için kullanılmıştır.
+- **ESLint (v8.55.0):** JavaScript ve JSX kodundaki potansiyel hataları ve stil sorunlarını tespit etmek için kullanılan bir linting aracıdır. Kod kalitesini artırmaya ve tutarlı bir kod stili sağlamaya yardımcı olur.
+- **Cypress (v14.2.0):** Uçtan uca (E2E) testler yazmak ve otomatikleştirmek için kullanılan modern bir test çerçevesidir. Tarayıcıda gerçek kullanıcı etkileşimlerini simüle ederek uygulamanın doğru çalıştığını doğrular.
+- **Testing Library (React):** React bileşenlerini kullanıcıların etkileşimde bulunduğu şekilde test etmeyi teşvik eden bir kütüphane ailesidir. Erişilebilirlik ve kullanıcı odaklı testler yazmayı kolaylaştırır.
+- **CSS & Styling:** Projede `App.css` ve `index.css` gibi dosyalar aracılığıyla genel stil tanımlamaları ve bileşen bazlı stiller kullanılmıştır.
+
+### Proje Yapısı
+
+Projenin ana kaynak kodu `src` klasörü altında organize edilmiştir:
+
+- **`main.jsx`**: React uygulamasının DOM'a render edildiği giriş noktasıdır.
+- **`App.jsx`**: Ana uygulama bileşenidir. React Router kullanılarak sayfa yönlendirmeleri burada tanımlanır.
+- **`pages/`**: Uygulamanın farklı sayfalarını temsil eden React bileşenlerini içerir (Örn: `Home.jsx`, `Order.jsx`, `OrderCompleted.jsx`).
+- **`assets/`**: Resimler, fontlar gibi statik varlıkların bulunduğu klasördür.
+- **`data.js`**: Uygulama içinde kullanılan statik verileri veya başlangıç verilerini içerebilir.
+- **`Header.jsx`**: Muhtemelen tüm sayfalarda ortak olarak kullanılan başlık (header) bileşenidir.
+
+### Temel Teknikler
+
+- **Bileşen Tabanlı Mimari:** React'in temel prensiplerinden biri olan bileşen tabanlı yaklaşım benimsenmiştir. UI, küçük ve yeniden kullanılabilir bileşenlere ayrılmıştır.
+- **State Yönetimi:** React'in kendi state (`useState`) ve prop'ları aracılığıyla bileşenler arası veri akışı sağlanmıştır. (IT2 bölümünde belirtildiği gibi, prop-lifting tekniği kullanılması beklenmektedir).
+- **Form Yönetimi:** Sipariş sayfasında kullanıcıdan veri almak için HTML form elemanları ve React state yönetimi kullanılmıştır. Form doğrulama (validation) işlemleri de muhtemelen bu kapsamdadır.
+- **API Entegrasyonu:** `axios` kütüphanesi ile harici bir mock API'ye (`https://reqres.in/api/pizza`) POST isteği gönderilerek form verilerinin işlenmesi simüle edilmiştir.
+- **Routing:** `react-router-dom` ile kullanıcıların uygulama içinde farklı sayfalara (anasayfa, sipariş sayfası, sipariş onay sayfası) geçişi sağlanmıştır.
 
 ## Önemli Notlar
 
@@ -264,18 +296,18 @@ IT1'i bitirdikten sonra çalışmanı daha da ileri götürebilirsin. Buradaki h
 
   - Form elemanlarını ve etiketlerini temel düzeyde eşleştirir, ancak yaygın hatalar yapar (örn. `label` ile ilgili `input` elemanlarını doğru şekilde ilişkilendiremez).
   - Checkbox ve radiobutton kullanımında semantik hatalar yapar, kullanıcı arayüzünde kafa karışıklığına yol açabilir.
-  - Controlled form elemanlarının event flow’u (örn. `onChange`, `onSubmit` gibi event handler’lar) yanlış veya eksik uygulanmıştır.
+  - Controlled form elemanlarının event flow'u (örn. `onChange`, `onSubmit` gibi event handler'lar) yanlış veya eksik uygulanmıştır.
 
 - **2 Gereklilikleri Karşılıyor:**
 
   - Form elemanları ile ilgili etiketleri doğru şekilde eşleştirir ve form elemanlarının kullanım amacını anlar.
   - Checkbox ve radiobutton gibi form elemanlarını doğru bir şekilde kullanır ve semantiklerini anlar; kullanıcıya net bir deneyim sunar.
-  - Controlled form elemanlarını yönetir ve temel event handler’ları (örn. `onChange`, `onSubmit`) etkin bir şekilde kullanır. Formun doğru bir şekilde gönderilmesini ve kullanıcı girdisinin yönetilmesini sağlar.
+  - Controlled form elemanlarını yönetir ve temel event handler'ları (örn. `onChange`, `onSubmit`) etkin bir şekilde kullanır. Formun doğru bir şekilde gönderilmesini ve kullanıcı girdisinin yönetilmesini sağlar.
 
 - **3 Gereksinimleri Aşıyor:**
   - Form elemanları ve etiketleri arasında mükemmel bir eşleştirme yapar; `label` for ve `input` id ilişkilendirmesini ustalıkla kullanır.
   - Gelişmiş form semantiklerini anlar ve uygular, özellikle checkbox ve radiobutton gruplarını anlamlandırma ve kullanıcı deneyimini iyileştirme konusunda üstün bir yaklaşım sergiler. Farklı tiplerdeki alanları ortak event handlerlar ile yönetebilir.
-  - Controlled form elemanları ile ilgili event flow’u ileri düzeyde yönetir; form verisini etkin bir şekilde toplar ve işler. `useState` ve `useEffect` gibi React hook’larını kullanarak form durumunu dinamik ve etkili bir şekilde yönetir.
+  - Controlled form elemanları ile ilgili event flow'u ileri düzeyde yönetir; form verisini etkin bir şekilde toplar ve işler. `useState` ve `useEffect` gibi React hook'larını kullanarak form durumunu dinamik ve etkili bir şekilde yönetir.
 
 ## 5. Kodu componentlere bölebilir, bu componentları map metodu ile kullanabilir. (8%)
 
@@ -341,24 +373,24 @@ IT1'i bitirdikten sonra çalışmanı daha da ileri götürebilirsin. Buradaki h
 
 - **1 Gereksinimlerin Altında:**
 
-  - React JS’nin temel kavramlarını (örn. state, props) anlamada zorluk çeker.
-  - State kullanımı sınırlıdır ve state’i bileşenler arası verimli bir şekilde yönetme konusunda eksiklikler gösterir.
+  - React JS'nin temel kavramlarını (örn. state, props) anlamada zorluk çeker.
+  - State kullanımı sınırlıdır ve state'i bileşenler arası verimli bir şekilde yönetme konusunda eksiklikler gösterir.
   - Parent-child bileşenler arası veri iletiminde ve callback fonksiyonlarının kullanımında hatalar yapar.
   - Event handler ve form validation işlemlerini doğru şekilde kurgulayamaz; kodda hatalı veya eksik uygulamalar bulunur.
-  - React’te veri akışını (state ve props data flow), form işlemlerini ve routing’i etkili bir şekilde kullanmada yetersiz kalır.
+  - React'te veri akışını (state ve props data flow), form işlemlerini ve routing'i etkili bir şekilde kullanmada yetersiz kalır.
 
 - **2 Gereklilikleri Karşılıyor:**
 
-  - React JS’nin temel konseptlerine (state, props, component lifecycle, event handling) hakimdir ve bunları uygulayabilir.
+  - React JS'nin temel konseptlerine (state, props, component lifecycle, event handling) hakimdir ve bunları uygulayabilir.
   - State ve props kullanımında yetkinlik gösterir; parent-child bileşenleri arasında veri ve callback fonksiyonları etkili bir şekilde iletir.
-  - Event handler’ları ve form validation süreçlerini doğru ve etkili bir şekilde kurgular.
+  - Event handler'ları ve form validation süreçlerini doğru ve etkili bir şekilde kurgular.
   - Veri akışını (state ve props data flow), form veri yönetimi, routing ve prop passing konularında temel ve orta düzeyde uygulamalar gerçekleştirebilir.
 
 - **3 Gereksinimleri Aşıyor:**
   - React JS üzerinde derin bir anlayışa ve uygulama becerisine sahiptir; ileri düzey state yönetimi ve performans optimizasyonu tekniklerini uygular.
   - Bileşenler arası veri iletiminde ve callback fonksiyonlarında hatasız kullanır.
   - Kompleks event handling ve form validation işlemlerini mükemmel bir şekilde kurgular ve uygular.
-  - React’te ileri düzey veri akışı, form işlemleri, routing, ve prop passing konularında üstün beceriler gösterir.
+  - React'te ileri düzey veri akışı, form işlemleri, routing, ve prop passing konularında üstün beceriler gösterir.
 
 ## 9. Formları da kapsayan en az üç anlamlı cypress testi yazabilir. (5%)
 
